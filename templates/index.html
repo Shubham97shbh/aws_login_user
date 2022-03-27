@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+        <!-- Navigation-->
+        {% include "header.html"%}
+        <header class="masthead">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="site-heading">
+                            <h1>Upload Your Pics and Videos</h1>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Main Content-->
+        {% if current_user.is_authenticated: %}
+        <div style="background-color:#F3D5C0">
+        <div class="container px-4 px-lg-5">
+        <!--input for saving to s3 bucket-->
+          <h2>Hello {{current_user.name}}</h2>
+          <h3>Upload your file here:</h3>
+          <form method="POST" action="/upload" enctype=multipart/form-data>
+            <input type=file name=file>
+            <input type=submit value="Upload">
+          </form>
+
+        </div>
+        <div>
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7 " style="width:100%;">
+                    <!--Pics uploaded-->
+                    <ul>
+                    {% for i in value.user_data %}
+                        {% if i.image %}
+                    <div class="post-preview">
+                         <li><img src={{i.data_link}} alt={{i.data_link}} width="500" height="500"></li>
+                </div>
+                        {% else %}
+                        <a href={{i.data_link}}>{{i.data_link}}</a>
+                        {% endif %}
+                    <!-- Divider-->
+                    <hr class="my-4"/>
+                    {% endfor %}
+                        </ul>
+
+                </div>
+            </div>
+                    </div>
+        {% else %}
+                <div class="container px-4 px-lg-5">
+        <!--input for saving to s3 bucket-->
+          <h1>Kindly login or register first to access Service</h1>
+        </div>
+
+
+</div>
+        {% endif %}
+
+</html>
