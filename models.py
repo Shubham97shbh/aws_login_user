@@ -24,8 +24,8 @@ login_manager.init_app(app)
 
 client = boto3.client(
     's3',
-    aws_access_key_id = 'AKIAWWCN26J3O5VNI5EL',
-    aws_secret_access_key = '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',
+    aws_access_key_id = '********',
+    aws_secret_access_key = '***********************',
     region_name = 'us-east-2'
 )
 # clientResponse = client.list_buckets()
