@@ -2,6 +2,8 @@ from models import *
 from data_class import *
 import os
 
+
+
 def is_url_image(image_url):
    image_formats = [".png", ".jpeg",".JPG",".jpg"]
    for i in image_formats:
@@ -9,6 +11,7 @@ def is_url_image(image_url):
           return True
    return False
 # login when the user is verified
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
@@ -16,10 +19,18 @@ def load_user(user_id):
 @app.route('/')
 def index():
     if current_user.is_authenticated:
-      media_data = User.query.get(current_user.id)
-      return render_template('index.html',current_user=current_user,value=media_data)
+        ip_addr = request.remote_addr
+        geo_data = geo.record_by_addr(ip_addr)
+        # saving location of the client
+        if geo_data:
+            new_location = Location(state=geo_data['city'],lat=geo_data['latitude'],long=geo_data['longitude'])
+            db.session.add(new_location)
+            db.session.commit()
+        media_data = User.query.get(current_user.id)
+        return render_template('index.html',current_user=current_user,value=media_data)
     return render_template('index.html', current_user=current_user)
 @app.route('/register',methods=['GET','POST'])
+
 def register():
     form = RegisterForm()
     if form.validate_on_submit():

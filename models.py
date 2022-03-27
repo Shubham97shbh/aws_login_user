@@ -6,7 +6,10 @@ from flask_login import UserMixin, login_user, LoginManager, login_required, cur
 from forms import LoginForm, RegisterForm
 import boto3
 from werkzeug.utils import secure_filename
+import pygeoip
 
+
+geo = pygeoip.GeoIP('data/GeoLiteCity.dat', pygeoip.MEMORY_CACHE)
 application = Flask(__name__)
 app = application
 

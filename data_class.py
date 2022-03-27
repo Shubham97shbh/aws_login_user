@@ -17,4 +17,11 @@ class Data(db.Model):
     data_link = db.Column(db.String(100), nullable=False)
     image = db.Column(db.Boolean,default=False,nullable=False)
 
+class Location(db.Model):
+    __tablename__ = 'location'
+    id = db.Column(db.Integer,primary_key=True)
+    state = db.Column(db.String(100),nullable=False)
+    lat = db.Column(db.Float,nullable=False)
+    long = db.Column(db.Float,nullable=False)
+
 db.create_all()
